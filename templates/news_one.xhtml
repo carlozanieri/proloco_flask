@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="Content-Type" content="text/html"/>
+  <title></title>
+  <meta name="author" content="Jake Rocheleau"/>
+  <link rel="shortcut icon" href="http://static.tmimgcdn.com/img/favicon.ico"/>
+  <link rel="icon" href="http://static.tmimgcdn.com/img/favicon.ico"/>
+  <link rel="stylesheet" type="text/css" href="${tg.url('/menu_6/css/default.css')}" />
+  <link rel="stylesheet" type="text/css" media="all" href="${tg.url('/news/css/styles.css')}"/>
+  <script type="text/javascript" src="${tg.url('/news/js/jquery-1.11.0.min.js')}"></script>
+  <script type="text/javascript" src="${tg.url('/news/js/responsiveCarousel.min.js')}"></script>
+</head>
+<?python
+from proloco.Connect import Connect
+
+news=Connect.news_one("", titolo, id)
+
+?>
+<body>
+<h1>${titolo}</h1>
+  <div id="w" style="margin-left:30%;">
+
+
+
+    <div class="crsl-items" data-navigation="navbtns">
+      <div class="crsl-wrap">
+        <div py:for="newss in news" class="crsl-item">
+          <div class="thumbnail">
+            <img  src= "${tg.url('news/img/')}{{newss[8]}}" alt="{{newss[3]}}"/>
+            <span class="postdate">{
+              }{newss[6]}}</span>
+          </div>
+
+          <h3><a href="#">{{newss[3]}}</a></h3>
+
+          <p>${newss[5]}</p>
+
+          <p class="readmore"><a href="/">Go Back &raquo;</a></p>
+        </div><!-- post #1 -->
+
+
+      </div><!-- @end .crsl-wrap -->
+    </div><!-- @end .crsl-items -->
+
+  </div><!-- @end #w -->
+<script type="text/javascript">
+$(function(){
+  $('.crsl-items').carousel({
+    visible: 3,
+    itemMinWidth: 180,
+    itemEqualHeight: 370,
+    itemMargin: 9,
+  });
+
+  $("a[href=#]").on('click', function(e) {
+    e.preventDefault();
+  });
+});
+</script>
+</body>
+</html>

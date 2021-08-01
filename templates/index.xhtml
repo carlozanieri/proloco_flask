@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
+
+	<link href="https://fonts.googleapis.com/css?family=Exo+2:300,400" rel="stylesheet" type='text/css'/>
+
+	<link rel="shortcut icon" href="{{url_for('static', filename = 'favicon.ico')}}"/>
+	<link rel="stylesheet"  href="{{url_for('static', filename = 'menu_6/css/component.css')}}"  type='text/css'/>
+	<link  rel="stylesheet" href="{{url_for('static', filename = 'menu_6/css/default.css')}}" type='text/css'/>
+	<link rel="stylesheet" href="{{ url_for('static', filename='stellarnav/css/stellarnav.css') }}" type='text/css'/>
+	<link  rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto'  type='text/css' />
+
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type='text/css'/>
+ <style>
+.content { margin:50px auto; max-width:728px; line-height:1.7}
+
+    </style>
+<style>
+/* styles for this sample only */
+*{ margin: 0; padding: 0; }
+body { height: 3200px; font-size: 16px; font-family: 'Exo 2', sans-serif; background: #efefef; color: #555; }
+.header { text-align: center; }
+.header a { padding: 30px 0 0; display: block; font-size: 48px; text-decoration: none; color: #555; }
+.header p { margin: 10px 0 40px 0; font-size: 18px; }
+.container { max-width: 1200px; margin: 0 auto; }
+@media only screen and (max-width : 1000px) {
+	.stellarnav > ul > li > a { padding: 20px 23px; }
+}
+/* styles for this sample only */
+</style>
+</head>
+<header>
+
+
+<div class="stellarnav">
+
+	<ul>
+
+		{% for menus in menu %}
+
+		<li >
+			<a href="{{ menus[6] }}" class="gn-icon gn-icon-help">{{menus[4]}}</a>
+
+			<ul class="dl-submenu">
+
+				{% for submenus in submenu %}
+
+				<li>
+					{% if menus[1] == submenus[2] %}
+					<a  href="{{submenus[6]}}" ><span></span> {{submenus[4]}}</a>
+					{% endif %}
+				</li>
+
+				{% endfor %}
+			</ul>
+		</li>
+		{% endfor %}
+	</ul>
+</div>
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+	<script type='text/javascript' src="{{url_for('static', filename = 'stellarnav/js/stellarnav.js')}}"></script>
+	<script type='text/javascript' src="{{url_for('static', filename = 'menu_6/js/modernizr.custom.js')}}"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			jQuery('.stellarnav').stellarNav({
+				theme: 'dark',
+				breakpoint: 960,
+				position: 'right',
+				phoneBtn: '18009997788',
+				locationBtn: 'https://www.google.com/maps'
+			});
+		});
+	</script>
+	</header>
+<body>
+<h1>python-flask-upload-files</h1>
+
+<a href="/upload_form">Upload form</a>
+
+<p>&nbsp;</p>
+<p>tempdir = {{tempdir}}</p>
+</body>
+</html>

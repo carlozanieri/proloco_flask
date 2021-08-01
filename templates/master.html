@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
+
+	<link href="https://fonts.googleapis.com/css?family=Exo+2:300,400" rel="stylesheet"/>
+	<!-- required -->
+	<link rel="stylesheet" type="text/css" media="all" href="${tg.url('/stellarnav/css/stellarnav.css')}"/>
+	<!-- required -->
+	<title>Pro Loco San Piero</title>
+		<meta name="description" content="Responsive Multi-Level Menu: Space-saving drop-down menu with subtle effects" />
+		<meta name="keywords" content="multi-level menu, mobile menu, responsive, space-saving, drop-down menu, css, jquery" />
+		<meta name="author" content="Carlo Zanieri" />
+		<link rel="shortcut icon" href="../favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="${tg.url('/menu_6/css/default.css')}" />
+		<link rel="stylesheet" type="text/css" href="${tg.url('/menu_6/css/component.css')}" />
+		<script src="${tg.url('/menu_6/js/modernizr.custom.js')}"></script>
+		<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+		<link rel="stylesheet" type="text/css" href="${tg.url('/menu_6/css/default.css')}" />
+		<link rel="stylesheet" type="text/css" href="${tg.url('/menu_6/css/component.css')}" />
+    <!-- css files -->
+    <link rel="stylesheet" href="${tg.url('/MENU/css/style.css')}"/>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <!-- js files -->
+    <style>
+.content { margin:50px auto; max-width:728px; line-height:1.7}
+
+    </style>
+<style>
+/* styles for this sample only */
+*{ margin: 0; padding: 0; }
+body { height: 3200px; font-size: 16px; font-family: 'Exo 2', sans-serif; background: #efefef; color: #555; }
+.header { text-align: center; }
+.header a { padding: 30px 0 0; display: block; font-size: 48px; text-decoration: none; color: #555; }
+.header p { margin: 10px 0 40px 0; font-size: 18px; }
+.container { max-width: 1200px; margin: 0 auto; }
+@media only screen and (max-width : 1000px) {
+	.stellarnav > ul > li > a { padding: 20px 23px; }
+}
+/* styles for this sample only */
+</style>
+
+</head>
+
+
+
+<header>
+	<img src="${tg.url('/img/logo.jpg')}" width="5%" height="5%" style="float: left;"/><p style=" display: inline; vertical-align: baseline; color:#7e342d; font-weight: bold; font-size: 96px; align: center; margin-left:25%"> Pro Loco <h1   style=" vertical-align: text-baseline; display: inline; color:#7e342d; font-size: 48px; text-align: center;" >S.Piero a Sieve</h1><img src="${tg.url('/img/logo.jpg')}" width="5%" height="5%" style="float: right;"/> </p>
+
+	<div class="header">
+
+	</div>
+	<div class="stellarnav">
+		<ul>
+			<li py:for="menus in menu">
+                				<a href="${ menus[6] }" class="gn-icon gn-icon-help">${menus[4]}</a>
+								<ul class="dl-submenu">
+									<li py:for="submenus in submenu" >
+
+                        					<a py:if="menus[1] == submenus[2]" href="${submenus[6]}" ><span></span> ${submenus[4]}</a>
+
+									</li>
+
+								</ul>
+							</li>
+	<!--		<li><a href="">Dropdown</a>
+		    	<ul>
+						<li><a href="#">How deep?</a>
+		    			<ul>
+				    		<li><a href="#">Deep</a>
+				    			<ul>
+				    				<li><a href="#">Even deeper</a>
+				    					<ul>
+				    						<li><a href="#">Item</a></li>
+				    						<li><a href="#">Item</a></li>
+				    						<li><a href="#">Item</a></li>
+				    					</ul>
+				    				</li>
+				    				<li><a href="#">Item</a></li>
+				    				<li><a href="#">Item</a></li>
+				    				<li><a href="#">Item</a></li>
+				    			</ul>
+				    		</li>
+				    		<li><a href="#">Item</a></li>
+				    		<li><a href="#">Item</a></li>
+				    		<li><a href="#">Item</a></li>
+				    		<li><a href="#">Item</a></li>
+		    			</ul>
+		    		</li>
+		    		<li><a href="#">Item</a>
+		    			<ul>
+				    		<li><a href="#">Item</a></li>
+				    		<li><a href="#">Item</a></li>
+				    		<li><a href="#">Item</a></li>
+				    		<li><a href="#">Item</a></li>
+		    			</ul>
+		    		</li>
+		    		<li><a href="#">Item</a>
+		    			<ul>
+		    				<li><a href="#">Deeper</a>
+		    					<ul>
+		    						<li><a href="#">Item</a></li>
+		    						<li><a href="#">Item</a></li>
+		    						<li><a href="#">Item</a></li>
+		    					</ul>
+		    				</li>
+		    				<li><a href="#">Item</a></li>
+		    				<li><a href="#">Item</a></li>
+		    				<li><a href="#">Item</a></li>
+		    			</ul>
+		    		</li>
+		    		<li><a href="#">Here's a very long item.</a>
+		    			<ul>
+				    		<li><a href="#">Item</a></li>
+				    		<li><a href="#">Item</a></li>
+				    		<li><a href="#">Item</a></li>
+				    		<li><a href="#">Item</a></li>
+		    			</ul>
+		    		</li>
+		    	</ul>
+		    </li>
+
+		   <li><a href="">Item 2</a></li>
+		    <li><a href="">Item 3</a></li>
+		    <li><a href="">Item 4</a></li>
+		    <li><a href="">Item 5</a></li>
+		    <li><a href="">Item 6</a></li>
+		    <li class="drop-left"><a href="">Drop Left</a>
+		    	<ul>
+		    		<li><a href="#">How deep?</a>
+		    			<ul>
+				    		<li><a href="#">Deep</a>
+				    			<ul>
+				    				<li><a href="#">Even deeper</a>
+				    					<ul>
+				    						<li><a href="#">Item</a></li>
+				    						<li><a href="#">Item</a></li>
+				    						<li><a href="#">Item</a></li>
+				    					</ul>
+				    				</li>
+				    				<li><a href="#">Item</a></li>
+				    				<li><a href="#">Item</a></li>
+				    				<li><a href="#">Item</a></li>
+				    			</ul>
+				    		</li>
+				    		<li><a href="#">Item</a></li>
+				    		<li><a href="#">Item</a></li>
+				    		<li><a href="#">Item</a></li>
+				    		<li><a href="#">Item</a></li>
+		    			</ul>
+		    		</li>
+		    		<li><a href="#">Item</a></li>
+		    		<li><a href="#">Item</a></li>
+		    		<li><a href="#">Item</a></li>
+		    		<li><a href="#">Item</a></li>
+		    	</ul>
+		    </li> -->
+		</ul>
+	</div><!-- .stellarnav -->
+
+	<!-- required -->
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+	<script type="text/javascript" src="${tg.url('/stellarnav/js/stellarnav.min.js')}"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			jQuery('.stellarnav').stellarNav({
+				theme: 'dark',
+				breakpoint: 960,
+				position: 'right',
+				phoneBtn: '18009997788',
+				locationBtn: 'https://www.google.com/maps'
+			});
+		});
+	</script>
+	<!-- required -->
+</header>
+<body>
+
+<div >
+
+			<div>
+
+				<div>
+
+					<iframe  marginheight="0px" marginwidth="0px" width="100%" height="600px" src="/slide?luogo=${pagina[2]}" frameborder="no" scrolling="no"/>
+
+				</div>
+
+
+<div  py:if="luogo == 'index'" style="float:right; margin-left:1%; margin-right:1%;">
+	<iframe  width="100%" height="500 px" src="/NEWS" frameborder="0" style="padding-top:1%;"></iframe>
+	 <iframe  width="100%" height="20%" src="${tg.url('/riquadro.html')}" frameborder="0" style="padding-top:2%;"></iframe>
+
+<div class="video">
+	<iframe width="20%" height="20%" src="https://www.youtube.com/embed/-lZO2ZzTWM4" frameborder="0"></iframe>
+</div>
+</div>
+				</div>
+
+
+<!--<py:include href = "nivo.xhtml" />-->
+
+
+					<p style="text-align: justify;  color:#7e342d; margin-right:15%;margin-left:15%;">
+
+				  		<img py:if="pagina[2] != 'index'" class="zoom" src= "${tg.url('/img/')}${pagina[8]}" width="12%" height="12%" alt="" style="float: left; margin: 15px 15px 15px 15px;"/>${pagina[5]}
+
+					  <img class="zoom" src="${tg.url('/img/')}${pagina[12]}" width="12%" height="12%" alt="" style="float: right; margin: 15px 15px 15px 15px;"/>${pagina[10]}
+
+					</p>
+
+		</div>
+
+</body>
+<footer>
+	<h1><p style="color:#000000; margin-left:30%; margin-right:25%; margin-top:10%; margin-bottom:5%;">Si ringraziano gli Sponsor</p></h1>
+	<div class="flex" ><img  src="${tg.url('/img/Sponsor SPS 2020.jpg')}"/></div>
+</footer>
+</html>

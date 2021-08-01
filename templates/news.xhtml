@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="Content-Type" content="text/html"/>
+  <title>Responsive Horizontal Posts Slider - Template Monster Demo</title>
+  <meta name="author" content="Jake Rocheleau"/>
+  <link rel="shortcut icon" href="http://static.tmimgcdn.com/img/favicon.ico"/>
+  <link rel="icon" href="http://static.tmimgcdn.com/img/favicon.ico"/>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename ='/menu_6/css/default.css')}}" />
+  <link rel="stylesheet" type="text/css" media="all" href="{{url_for('static', filename ='/news/css/styles.css')}}"/>
+  <script type="text/javascript" src="{{url_for('static', filename ='/news/js/jquery-1.11.0.min.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename ='/news/js/responsiveCarousel.min.js')}}"></script>
+</head>
+
+<body>
+  <div id="w">
+    <h1>NEWS</h1>
+
+    <nav class="slidernav">
+      <div id="navbtns" class="clearfix">
+        <a href="#" class="previous">prev</a>
+        <a href="#" class="next">next</a>
+      </div>
+    </nav>
+
+    <div class="crsl-items" data-navigation="navbtns">
+      <div class="crsl-wrap">
+       {% for newss in news %}
+        <div class="crsl-item">
+          <div class="thumbnail">
+            <img class="zoom" src= "{{url_for('static', filename ='news/img/')}}{{newss[8]}}" alt="{{newss[3]}}"/>
+            <span class="postdate">Feb 16, 2014</span>
+          </div>
+
+          <h3><a href="#">{{newss[3]}}</a></h3>
+
+          <p>{{newss[10]}}</p>
+
+          <p class="readmore"><a href="/news_one?titolo=${newss[3]}&amp;id={{newss[0]}}"  target="_parent">Read More &raquo;</a></p>
+        </div><!-- post #1 -->
+      {% endfor %}
+
+      </div><!-- @end .crsl-wrap -->
+    </div><!-- @end .crsl-items -->
+
+  </div><!-- @end #w -->
+<script type="text/javascript">
+$(function(){
+  $('.crsl-items').carousel({
+    visible: 3,
+    itemMinWidth: 180,
+    itemEqualHeight: 370,
+    itemMargin: 9,
+  });
+
+  $("a[href=#]").on('click', function(e) {
+    e.preventDefault();
+  });
+});
+</script>
+</body>
+</html>
