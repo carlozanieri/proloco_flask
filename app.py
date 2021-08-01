@@ -71,6 +71,11 @@ def slide():
 def news():
     return flask.render_template('news-slider.xhtml', pagina=Connect.body("", "sanpiero"), manifestazione="news")
 
+@app.route('/upload')
+def upload():
+
+    return flask.render_template('index.xhtml', pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("") )
+
 
 @app.route('/newss')
 def newss():
