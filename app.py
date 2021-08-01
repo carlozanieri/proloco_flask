@@ -33,12 +33,12 @@ def allowed_file(filename):
 @app.route("/")
 def entry_point():
     """ simple entry for test """
-    return flask.render_template('master.xhtml', luogo="index", pagina=Connect.body("", "index"), tempdir=tempfile.gettempdir(), menu=Connect.menu(""), submenu=Connect.submnu(""), submenu2=Connect.submnu2(""))
+    return flask.render_template('master.xhtml', luogo="index", pagina=Connect.body("", "index"), tempdir="/home/carlo/proloco_flask/static/img/", menu=Connect.menu(""), submenu=Connect.submnu(""), submenu2=Connect.submnu2(""))
 
 @app.route("/master")
 def master():
     """ simple entry for test """
-    return flask.render_template('master.html',  tempdir=tempfile.gettempdir(), menu=Connect.menu(""), submenu=Connect.submnu(""), submenu2=Connect.submnu2(""))
+    return flask.render_template('master.html',  tempdir="/home/carlo/proloco_flask/static/img/", menu=Connect.menu(""), submenu=Connect.submnu(""), submenu2=Connect.submnu2(""))
 
 @app.route('/sanpiero')
 def sanpiero():
@@ -213,8 +213,8 @@ if __name__ == "__main__" or __name__ == "main":
             if os.path.isdir(os.getenv("TEMP_DIR")):
               print("Overriding tempdir for docker image")
               tempfile.tempdir = os.getenv("TEMP_DIR")
-    print("tempdir: " + tempfile.gettempdir())
-    app.config['UPLOAD_FOLDER'] = tempfile.gettempdir()
+    print("tempdir: " + "/home/carlo/proloco_flask/static/img/")
+    app.config['UPLOAD_FOLDER'] = "/home/carlo/proloco_flask/static/img/"
 
     # Below error if MAX_CONTENT_LENGTH is exceeded by upload
     # [error] 11#11: *1 readv() failed (104: Connection reset by peer) while reading upstream
