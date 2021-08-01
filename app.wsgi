@@ -13,5 +13,4 @@
 
 
 #Load the application
-from paste.deploy import loadapp
-application = loadapp('config:%s' % APP_CONFIG)
+from proloco_flask import app as application
