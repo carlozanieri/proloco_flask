@@ -8,7 +8,7 @@
 #    Allow from all
 #</Directory>
 
-application = create_app()
+##application = create_app()
 ##APP_CONFIG = "/srv/http/proloco_flask/__init__.py "
 
 
