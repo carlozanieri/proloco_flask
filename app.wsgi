@@ -7,7 +7,7 @@
 #    Order deny,allow
 #    Allow from all
 #</Directory>
-from / import create_app
+import create_app
 application = create_app()
 ##APP_CONFIG = "/srv/http/proloco_flask/__init__.py "
 
