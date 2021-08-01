@@ -11,9 +11,6 @@ import create_app
 application = create_app()
 ##APP_CONFIG = "/srv/http/proloco_flask/__init__.py "
 
-#Setup logging
-#import logging.config
-#logging.config.fileConfig(APP_CONFIG)
 
 #Load the application
 from paste.deploy import loadapp
