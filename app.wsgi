@@ -1,10 +1,9 @@
-#! /usr/bin/python3.9
-activate_this = '/srv/http/proloco_flask/app.py'
-execfile(activate_this, dict(__file__=activate_this))
-import logging
-import sys
-logging.basicConfig(stream=sys.stderr)
-sys.path.insert(0, '/srv/http/proloco_flask/')
-from app import app as application
-application.secret_key = 'proloco'
+WSGIDaemonProcess proloco_flask threads=5
+WSGIScriptAlias / /srv/http/proloco_flask/app.wsgi
 
+<Directory /srv/http/proloco_flask/>
+    WSGIProcessGroup flask_project
+    WSGIApplicationGroup %{GLOBAL}
+    Order deny,allow
+    Allow from all
+</Directory>
