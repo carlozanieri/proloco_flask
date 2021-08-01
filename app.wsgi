@@ -6,7 +6,7 @@
 #    WSGIApplicationGroup %{GLOBAL}
 #    Order deny,allow
 #    Allow from all
-à</Directory>
+#</Directory>
 
 APP_CONFIG = "/srv/http/proloco_flask/__init__.py "
 
