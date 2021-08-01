@@ -13,4 +13,4 @@
 
 
 #Load the application
-from / import app as application
+from proloco_flask import app as application
