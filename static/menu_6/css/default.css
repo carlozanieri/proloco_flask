@@ -225,7 +225,7 @@ a:hover {
  
  @media screen and (min-width:650px){
 	 header {
-	  background:   url(bg-header.jpg) no-repeat center center;
+	  background:   url(bg-header.jpg) repeat center center;
 	}
  }
  
