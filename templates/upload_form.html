@@ -1,5 +1,7 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
 
@@ -11,7 +13,7 @@
 		<meta name="description" content="Responsive Multi-Level Menu: Space-saving drop-down menu with subtle effects" />
 		<meta name="keywords" content="multi-level menu, mobile menu, responsive, space-saving, drop-down menu, css, jquery" />
 		<meta name="author" content="Carlo Zanieri" />
-		<link rel="shortcut icon" href="{{url_for('static', filename ='favicon.ico')}}"/>
+		<link rel="shortcut icon" href="../favicon.ico"/>
 		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename ='menu_6/css/default.css')}}" />
 		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename ='menu_6/css/component.css')}}" />
 		<script src="{{url_for('static', filename ='menu_6/js/modernizr.custom.js')}}"></script>
@@ -22,7 +24,10 @@
     <link rel="stylesheet" href="{{url_for('static', filename ='MENU/css/style.css')}}"/>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <!-- js files -->
+    <style>
+.content { margin:50px auto; max-width:728px; line-height:1.7}
 
+    </style>
 <style>
 /* styles for this sample only */
 *{ margin: 0; padding: 0; }
@@ -36,29 +41,10 @@ body { height: 3200px; font-size: 16px; font-family: 'Exo 2', sans-serif; backgr
 }
 /* styles for this sample only */
 </style>
-<script language="javascript">
-function changeFormAction() {
-    // get form and field elements    
-    theform = document.getElementById('singleuploadchunked')
-    simplefilename = document.getElementById('thefile').value.split('\\').pop()
-
-    // set value of field and form action
-    document.getElementById('thefilename').value = simplefilename
-    theform.action = "/singleuploadchunked/" + simplefilename
-}
-function submitForm() {
-    // get form and field elements    
-    theform = document.getElementById('singleuploadchunked')
-    if (document.getElementById('thefile').value=='') {
-      alert("Need to provide a file to upload first!")
-    }else {
-      theform.submit()
-    }
-}
-</script>
-
 
 </head>
+
+
 <header>
 	<img src="{{url_for('static', filename ='/img/logo.jpg')}}" width="5%" height="5%" style="float: left;"/><p style=" display: inline; vertical-align: baseline; color:#7e342d; font-weight: bold; font-size: 96px; align: center; margin-left:25%"> Pro Loco <h1   style=" vertical-align: text-baseline; display: inline; color:#7e342d; font-size: 48px; text-align: center;" >S.Piero a Sieve</h1><img src="{{url_for('static', filename ='/img/logo.jpg')}}" width="5%" height="5%" style="float: right;"/> </p>
 
@@ -103,7 +89,6 @@ function submitForm() {
 	<!-- required -->
 </header>
 <body>
-
 {% with messages = get_flashed_messages() %}
 {% if messages %}
 <p style="color: red; font-weight: bold;">
@@ -114,8 +99,12 @@ function submitForm() {
 {% endif %}
 {% endwith %}
 
-
-
+<h2>Single file chunked submission form</h2>
+<form id="singleuploadchunked" action="/singleuploadchunked/" method="POST" enctype="multipart/form-data">
+  <input type="file" id="thefile" name="file" onChange="changeFormAction()" />
+  <input type="text" id="thefilename" value=""/>
+  <input type="button" value="submit single file chunked" onclick="submitForm()"/>
+</form>
 
 <h2>File submission form (single)</h2>
 <form action="/multipleupload" method="POST" enctype="multipart/form-data">
@@ -131,7 +120,18 @@ function submitForm() {
 </form>
 
 
-
+<h2>File submission form with GET (No file element)</h2>
+<form action="/multipleupload" method="GET">
+  <input type="submit" value="Submit GET with no file element" />
+</form>
+<h2>File submission form with POST (No file element)</h2>
+<form action="/multipleupload" method="POST">
+  <input type="submit" value="Submit POST with no file element" />
+</form>
 
 </body>
+<footer>
+	<h1><p style="color:#000000; margin-left:30%; margin-right:25%; margin-top:10%; margin-bottom:5%;">Si ringraziano gli Sponsor</p></h1>
+	<div class="flex" ><img  src="{{url_for('static', filename = 'img/Sponsor SPS 2020.jpg')}}"/></div>
+</footer>
 </html>
