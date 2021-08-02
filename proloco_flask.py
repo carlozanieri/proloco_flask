@@ -61,7 +61,7 @@ def chisiamo():
 @app.route('/upload_form')
 def upload_form():
     """ show upload form with multiple scenarios """
-    return flask.render_template('upload_form.html')
+    return flask.render_template('upload_form.html', pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu(""))
 
 @app.route('/slide', methods=["GET", "POST"])
 def slide():
@@ -101,15 +101,15 @@ def single_upload_chunked(filename=None):
     """
     if "Content-Length" not in flask.request.headers:
         add_flash_message("did not sense Content-Length in headers")
-        return flask.redirect(flask.url_for("upload_form"))
+        return flask.redirect(flask.url_for("upload_form"), pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu(""))
 
     if filename is None or filename=='':
         add_flash_message("did not sense filename in form action")
-        return flask.redirect(flask.url_for("upload_form"))
+        return flask.redirect(flask.url_for("upload_form", pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("")))
 
     if not allowed_file(filename):
         add_flash_message("not going to process file with extension " + filename)
-        return flask.redirect(flask.url_for("upload_form"))
+        return flask.redirect(flask.url_for("upload_form", pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("")))
 
     print("Total Content-Length: " + flask.request.headers['Content-Length'])
     fileFullPath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -134,11 +134,11 @@ def single_upload_chunked(filename=None):
                     #print("wrote chunk of {}".format(len(chunk)))
     except OSError as e:
         add_flash_message("ERROR writing file " + filename + " to disk: " + StringIO(str(e)).getvalue())
-        return flask.redirect(flask.url_for("upload_form"))
+        return flask.redirect(flask.url_for("upload_form", pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("")))
 
     print("")
     add_flash_message("SUCCESS uploading single file: " + filename)
-    return flask.redirect(flask.url_for("upload_form"))
+    return flask.redirect(flask.url_for("upload_form", pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("")))
 
 
 @app.route("/multipleupload", methods=["GET", "POST", "PUT"])
@@ -161,7 +161,7 @@ def multiple_upload(file_element_name="files[]"):
     # must be POST/PUT
     if flask.request.method not in ['POST', 'PUT']:
         add_flash_message("Can only upload on POST/PUT methods")
-        return flask.redirect(flask.url_for("upload_form"))
+        return flask.redirect(flask.url_for("upload_form", pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("")))
 
     # files will be materialized as soon as we touch request.files,
     # so check for errors right up front
@@ -170,12 +170,12 @@ def multiple_upload(file_element_name="files[]"):
     except OSError as e:
         print("ERROR ON INITIAL TOUCH OF request.files")
         add_flash_message("ERROR materializing files to disk: " + StringIO(str(e)).getvalue())
-        return flask.redirect(flask.url_for("upload_form"))
+        return flask.redirect(flask.url_for("upload_form", pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("")))
 
     # must have <input type="file"> element
     if file_element_name not in flask.request.files:
         add_flash_message('No files uploaded')
-        return flask.redirect(flask.url_for("upload_form"))
+        return flask.redirect(flask.url_for("upload_form", pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("")))
 
     # get list of files uploaded
     files = flask.request.files.getlist(file_element_name)
@@ -183,7 +183,7 @@ def multiple_upload(file_element_name="files[]"):
     # if user did not select file, filename will be empty
     if len(files)==1 and files[0].filename == '':
         add_flash_message('No selected file')
-        return flask.redirect(flask.url_for("upload_form"))
+        return flask.redirect(flask.url_for("upload_form", pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("")))
 
     # loop through uploaded files, saving
     for ufile in files:
@@ -198,7 +198,7 @@ def multiple_upload(file_element_name="files[]"):
         except OSError as e:
             add_flash_message("ERROR writing file " + filename + " to disk: " + StringIO(str(e)).getvalue())
 
-    return flask.redirect(flask.url_for("upload_form"))
+    return flask.redirect(flask.url_for("upload_form", pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("")))
 
 def add_flash_message(msg):
     """Provides message to end user in browser"""
