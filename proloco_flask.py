@@ -19,7 +19,7 @@ UPLOAD_FOLDER = '/srv/http/proloco_flask/static/img'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = flask.Flask(__name__, static_folder="static")
-
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.errorhandler(OSError)
 def handle_oserror(oserror):
     """ Flask framework hooks into this function is OSError not handled by routes """
