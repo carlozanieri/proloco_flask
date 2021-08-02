@@ -1,7 +1,7 @@
 #Load the application
 import sys
 sys.path.insert(0, '/srv/http/proloco_flask/')
-from proloco_flask.py import app as application
+from proloco_flask import app as application
 
 #WSGIDaemonProcess proloco_flask threads=5
 #WSGIScriptAlias / /srv/http/proloco_flask/app.wsgi
