@@ -15,6 +15,7 @@ from io import StringIO
 from werkzeug.utils import secure_filename
 from Connect import Connect
 # whitelist of file extensions
+UPLOAD_FOLDER = '/srv/http/proloco_flask<7static/img'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = flask.Flask(__name__, static_folder="static")
