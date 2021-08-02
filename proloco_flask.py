@@ -56,7 +56,7 @@ def mugello():
 @app.route('/chisiamo')
 def chisiamo():
 
-    return flask.render_template('master.xhtml', pagina=Connect.body("", "chisiamo"), luogo="chisiamo",menu=Connect.menu(""), submenu=Connect.submnu("") )
+    return flask.render_template('master.xhtml', pagina=Connect.body("", "chisiamo"), luogo="index",menu=Connect.menu(""), submenu=Connect.submnu("") )
 
 @app.route('/upload_form')
 def upload_form():
