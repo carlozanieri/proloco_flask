@@ -77,7 +77,10 @@ def upload():
 
     return flask.render_template('upload_form.html', pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("") )
 
+@app.route('/arrivare')
+def arrivare():
 
+    return flask.render_template('comearrivare.xhtml', pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("") )
 @app.route('/newss')
 def newss():
     return flask.render_template('news.xhtml', pagina=Connect.body("", "sanpiero"), manifestazione="news", news=Connect.news("") )
