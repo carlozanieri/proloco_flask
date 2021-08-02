@@ -213,8 +213,8 @@ if __name__ == "__main__" or __name__ == "main":
             if os.path.isdir(os.getenv("TEMP_DIR")):
               print("Overriding tempdir for docker image")
               tempfile.tempdir = os.getenv("TEMP_DIR")
-    print("tempdir: " + "/home/carlo/proloco_flask/static/img/")
-    app.config['UPLOAD_FOLDER'] = "/home/carlo/proloco_flask/static/img/"
+    print("tempdir: " + "/srv/http/proloco_flask/static/img/")
+    app.config['UPLOAD_FOLDER'] = "/srv/http/proloco_flask/static/img/"
 
     # Below error if MAX_CONTENT_LENGTH is exceeded by upload
     # [error] 11#11: *1 readv() failed (104: Connection reset by peer) while reading upstream
