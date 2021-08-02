@@ -191,7 +191,7 @@ def multiple_upload(file_element_name="files[]"):
             filename = secure_filename(ufile.filename)
             if allowed_file(filename):
                 print("uploading file {} of type {}".format(filename, ufile.content_type))
-                ufile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                ufile.save(os.path.join(UPLOAD_FOLDER, filename))
                 flask.flash("Just uploaded: " + filename)
             else:
                 add_flash_message("not going to process file with extension " + filename)
