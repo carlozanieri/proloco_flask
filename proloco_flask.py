@@ -33,12 +33,12 @@ def allowed_file(filename):
 @app.route("/")
 def entry_point():
     """ simple entry for test """
-    return flask.render_template('master.xhtml', luogo="index", pagina=Connect.body("", "index"), tempdir="/home/carlo/proloco_flask/static/img/", menu=Connect.menu(""), submenu=Connect.submnu(""), submenu2=Connect.submnu2(""))
+    return flask.render_template('master.xhtml', luogo="index", pagina=Connect.body("", "index"), tempdir="/srv/http/proloco_flask/static/img/", menu=Connect.menu(""), submenu=Connect.submnu(""), submenu2=Connect.submnu2(""))
 
 @app.route("/master")
 def master():
     """ simple entry for test """
-    return flask.render_template('master.html',  tempdir="/home/carlo/proloco_flask/static/img/", menu=Connect.menu(""), submenu=Connect.submnu(""), submenu2=Connect.submnu2(""))
+    return flask.render_template('master.html',  tempdir="/srv/http/proloco_flask/static/img/", menu=Connect.menu(""), submenu=Connect.submnu(""), submenu2=Connect.submnu2(""))
 
 @app.route('/sanpiero')
 def sanpiero():
