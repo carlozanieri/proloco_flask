@@ -85,6 +85,24 @@ def arrivare():
 def newss():
     return flask.render_template('news.xhtml', pagina=Connect.body("", "sanpiero"), manifestazione="news", news=Connect.news("") )
 
+@app.route('/news_one')
+def news_one():
+        titolo = request.args['titolo']
+        id = request.args['id']
+        """Handle the front-page."""
+        return flask.render_template('news_one.xhtml', news=Connect.news_one("", titolo, id), pagina=Connect.body("", "sanpiero"), titolo=titolo, id=id)
+
+@app.route('/manifestazioni')
+def manifestazioni():
+    return flask.render_template('manifesta.xhtml', pagina=Connect.body("", "sanpiero"), manifestazione="manifestazioni", news=Connect.manifesta("") )
+
+@app.route('/manifestazioni_one')
+def manifestazioni_one():
+        titolo = request.args['titolo']
+        id = request.args['id']
+        """Handle the front-page."""
+        return flask.render_template('manifesta_one.xhtml', news=Connect.manifesta_one("", titolo, id), pagina=Connect.body("", "sanpiero"), titolo=titolo, id=id)
+
 @app.route("/singleuploadchunked/<filename>", methods=["POST", "PUT"])
 def single_upload_chunked(filename=None):
     """Saves single file uploaded from <input type="file">, uses stream to read in by chunks

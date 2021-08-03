@@ -219,7 +219,29 @@ class Connect:
         news = cursor.fetchall()
         # menu = primanota[1]["descrizione"]
         return news
+    def manifesta(self):
+        data = "2021-06-08 00:00:00"
+        db = MySQLdb.connect(options.mysql_host, options.mysql_user, options.mysql_password, options.mysql_database)
+        ##print(menu)
+        cursor = db.cursor()
+        cursor.execute("SELECT *  from manifestazioni where published >= '" + data + "'")
+        ##cursor.execute("SELECT *  from slider")
+        manifesta = cursor.fetchall()
+        # menu = primanota[1]["descrizione"]
+        return manifesta
 
+    def manifesta_one(self, titolo, id):
+        data = "2021-06-08 00:00:00"
+        ##titolo=titolo
+        db = MySQLdb.connect(options.mysql_host, options.mysql_user, options.mysql_password, options.mysql_database)
+        ##print(titolo)
+        cursor = db.cursor()
+        ####cursor.execute("SELECT *  from news where id = 3")
+        cursor.execute("SELECT *  from manifestazioni where id = '" + id + "'")
+        ##cursor.execute("SELECT *  from slider")
+        manifesta = cursor.fetchall()
+        # menu = primanota[1]["descrizione"]
+        return manifesta
 
     def get_class(kls):
         parts = kls.split('.')
@@ -229,8 +251,7 @@ class Connect:
             m = getattr(m, comp)
         return m
 
-    def save(self, _file):
-        import cv2
+
 
         # read image as grey scale
         img = cv2.imread('D:/image-1.png')
