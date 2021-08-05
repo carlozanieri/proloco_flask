@@ -7,8 +7,8 @@ import sys
 import os
 import tempfile
 import flask
-from flask import  request
-from flask import url_for
+from flask import request
+from flask import Flask, render_template
 # Python2
 # import StringIO
 from io import StringIO
@@ -30,6 +30,23 @@ def handle_oserror(oserror):
 def allowed_file(filename):
     """ whitelists file extensions for security reasons """
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route("/home")
+def home():
+    """Landing page route."""
+    nav = [
+        {"name": "Home", "url": "https://example.com/1"},
+        {"name": "About", "url": "https://example.com/2"},
+        {"name": "Pics", "url": "https://example.com/3"},
+    ]
+    return render_template(
+        "home.html",
+        nav=nav,
+        title="Jinja Demo Site",
+        description="Smarter page templates with Flask & Jinja.",
+        menu=Connect.menu(""), submenu=Connect.submnu(""),
+        luogo="index", pagina=Connect.body("", "index"), tempdir="/srv/http/proloco_flask/static/img/",
+    )
 
 @app.route("/")
 def entry_point():
@@ -57,6 +74,11 @@ def mugello():
 def chisiamo():
 
     return flask.render_template('master.xhtml', pagina=Connect.body("", "chisiamo"), luogo="index",menu=Connect.menu(""), submenu=Connect.submnu("") )
+
+@app.route('/menu')
+def menu():
+
+    return flask.render_template('menu.xhtml', pagina=Connect.body("", "menu"), luogo="index",menu=Connect.menu(""), submenu=Connect.submnu("") )
 
 @app.route('/upload_form')
 def upload_form():
@@ -94,14 +116,14 @@ def news_one():
 
 @app.route('/manifestazioni')
 def manifestazioni():
-    return flask.render_template('manifesta.xhtml', pagina=Connect.body("", "sanpiero"), manifestazione="manifestazioni", news=Connect.manifesta("") )
+    return flask.render_template('manifesta.xhtml', titolo="Manifestazioni", per='5%', go="more", pagina=Connect.body("", "sanpiero"), manifestazione="manifestazioni", news=Connect.manifesta(""),menu=Connect.menu(""), submenu=Connect.submnu("") )
 
 @app.route('/manifestazioni_one')
 def manifestazioni_one():
         titolo = request.args['titolo']
         id = request.args['id']
         """Handle the front-page."""
-        return flask.render_template('manifesta_one.xhtml', news=Connect.manifesta_one("", titolo, id), pagina=Connect.body("", "sanpiero"), titolo=titolo, id=id)
+        return flask.render_template('manifesta.xhtml', per='30%', go="back", news=Connect.manifesta_one("", titolo, id), pagina=Connect.body("", "sanpiero"), titolo=titolo, id=id,menu=Connect.menu(""), submenu=Connect.submnu(""))
 
 @app.route("/singleuploadchunked/<filename>", methods=["POST", "PUT"])
 def single_upload_chunked(filename=None):

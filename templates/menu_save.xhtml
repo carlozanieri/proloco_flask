@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
+
+	<link href="https://fonts.googleapis.com/css?family=Exo+2:300,400" rel="stylesheet"/>
+	<!-- required -->
+	<link rel="stylesheet" type="text/css" media="all" href="{{url_for('static', filename ='stellarnav/css/stellarnav.css')}}"/>
+	<!-- required -->
+	<title>Pro Loco San Piero</title>
+		<meta name="description" content="Responsive Multi-Level Menu: Space-saving drop-down menu with subtle effects" />
+		<meta name="keywords" content="multi-level menu, mobile menu, responsive, space-saving, drop-down menu, css, jquery" />
+		<meta name="author" content="Carlo Zanieri" />
+		<link rel="shortcut icon" href="../favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename ='menu_6/css/default.css')}}" />
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename ='menu_6/css/component.css')}}" />
+		<script src="{{url_for('static', filename ='menu_6/js/modernizr.custom.js')}}"></script>
+		<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename ='menu_6/css/default.css')}}" />
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename ='menu_6/css/component.css')}}" />
+    <!-- css files -->
+    <link rel="stylesheet" href="{{url_for('static', filename ='MENU/css/style.css')}}"/>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <!-- js files -->
+</head>
+<body>
+	<div class="stellarnav">
+		<ul>
+			{% for menus in menu %}
+			<li>
+
+                				<a href="{{ menus[6] }}" class="gn-icon gn-icon-help">{{menus[4]}}</a>
+								<ul class="dl-submenu">
+									{% for submenus in submenu %}
+									<li >
+												{% if menus[1] == submenus[2] %}
+                        					<a href="{{submenus[6]}}" ><span></span> {{submenus[4]}}</a>
+											{% endif %}
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+			{% endfor%}
+
+		</ul>
+	</div><!-- .stellarnav -->
+
+	<!-- required -->
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+	<script type="text/javascript" src="{{url_for('static', filename ='stellarnav/js/stellarnav.min.js')}}"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			jQuery('.stellarnav').stellarNav({
+				theme: 'dark',
+				breakpoint: 960,
+				position: 'right',
+				phoneBtn: '18009997788',
+				locationBtn: 'https://www.google.com/maps'
+			});
+		});
+	</script>
+	<!-- required -->
+</body>
+
+</html>

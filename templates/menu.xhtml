@@ -5,10 +5,10 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
 
-	<link href="https://fonts.googleapis.com/css?family=Exo+2:300,400" rel="stylesheet"/>
-	<!-- required -->
+	<!-- <link href="https://fonts.googleapis.com/css?family=Exo+2:300,400" rel="stylesheet"/>
+	required -->
 	<link rel="stylesheet" type="text/css" media="all" href="{{url_for('static', filename ='stellarnav/css/stellarnav.css')}}"/>
-	<!-- required -->
+	<!-- required
 	<title>Pro Loco San Piero</title>
 		<meta name="description" content="Responsive Multi-Level Menu: Space-saving drop-down menu with subtle effects" />
 		<meta name="keywords" content="multi-level menu, mobile menu, responsive, space-saving, drop-down menu, css, jquery" />
@@ -20,11 +20,11 @@
 		<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
 		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename ='menu_6/css/default.css')}}" />
 		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename ='menu_6/css/component.css')}}" />
-    <!-- css files -->
+     css files
     <link rel="stylesheet" href="{{url_for('static', filename ='MENU/css/style.css')}}"/>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <!-- js files -->
-    <style>
+     js files -->
+  <style>
 .content { margin:50px auto; max-width:728px; line-height:1.7}
 
     </style>
@@ -41,7 +41,35 @@ body { height: 3200px; font-size: 16px; font-family: 'Exo 2', sans-serif; backgr
 }
 /* styles for this sample only */
 </style>
-<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+</head>
+
+<body>
+<header>
+<img src="{{url_for('static', filename ='/img/logo.jpg')}}" width="5%" height="5%" style="float: left;"/><p style=" display: inline; vertical-align: baseline; color:#7e342d; font-weight: bold; font-size: 96px; align: center; margin-left:25%"> Pro Loco <h1   style=" vertical-align: text-baseline; display: inline; color:#7e342d; font-size: 48px; text-align: center;" >S.Piero a Sieve</h1><img src="{{url_for('static', filename ='/img/logo.jpg')}}" width="5%" height="5%" style="float: right;"/> </p>
+
+	<div class="stellarnav">
+		<ul>
+			{% for menus in menu %}
+			<li>
+
+                				<a href="{{ menus[6] }}" class="gn-icon gn-icon-help">{{menus[4]}}</a>
+								<ul class="dl-submenu">
+									{% for submenus in submenu %}
+									<li >
+												{% if menus[1] == submenus[2] %}
+                        					<a href="{{submenus[6]}}" ><span></span> {{submenus[4]}}</a>
+											{% endif %}
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+			{% endfor%}
+
+		</ul>
+	</div>
+</header>
+	<!-- required -->
+
 	<script type="text/javascript" src="{{url_for('static', filename ='stellarnav/js/stellarnav.min.js')}}"></script>
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {
@@ -54,52 +82,7 @@ body { height: 3200px; font-size: 16px; font-family: 'Exo 2', sans-serif; backgr
 			});
 		});
 	</script>
-</head>
-
-<body>
-{% include 'menu.xhtml' %}
-
-<div >
-
-			<div>
-
-				<div>
-
-				<iframe  scrolling="no" width="100%" height="500 px" src=" {{ url_for('slide', luogo=luogo)}} " frameborder="0" style="padding-top:1%;"></iframe>
-
-				</div>
-
-{% if luogo == "index" or  luogo == "chisiamo" %}
-<div   style="float:right; margin-left:1%; margin-right:1%;">
-	<iframe  width="100%" height="500 px" src="/newss" frameborder="0" style="padding-top:1%;"></iframe>
-	 <iframe  width="100%" height="20%" src="{{url_for('static', filename = 'riquadro.html')}}" frameborder="0" style="padding-top:2%;"></iframe>
-
-<div class="video">
-	<iframe width="20%" height="20%" src="https://www.youtube.com/embed/-lZO2ZzTWM4" frameborder="0"></iframe>
-</div>
-</div>
-{% endif %}
-
-			</div>
-
-
-<!--<py:include href = "nivo.xhtml" />-->
-
-
-					<p style="text-align: justify;  color:#7e342d; margin-right:15%;margin-left:15%;">
-
-				  		<img  class="zoom" src= "{{url_for('static', filename = 'img/')}}{{pagina[8]}}" width="12%" height="12%" alt="" style="float: left; margin: 15px 15px 15px 15px;"/>{{pagina[5]}}
-
-					  <img class="zoom" src="{{url_for('static', filename = 'img/')}}{{pagina[12]}}" width="12%" height="12%" alt="" style="float: right; margin: 15px 15px 15px 15px;"/>{{pagina[10]}}
-
-					</p>
-
-		</div>
-
-
-<footer>
-	<h1><p style="color:#000000; margin-left:30%; margin-right:25%; margin-top:10%; margin-bottom:5%;">Si ringraziano gli Sponsor</p></h1>
-	<div class="flex" ><img  src="{{url_for('static', filename = 'img/Sponsor SPS 2020.jpg')}}"/></div>
-</footer>
+	<!-- required -->
 </body>
+
 </html>

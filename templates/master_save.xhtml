@@ -41,7 +41,39 @@ body { height: 3200px; font-size: 16px; font-family: 'Exo 2', sans-serif; backgr
 }
 /* styles for this sample only */
 </style>
-<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+
+</head>
+
+<body>
+<header>
+	<img src="{{url_for('static', filename ='/img/logo.jpg')}}" width="5%" height="5%" style="float: left;"/><p style=" display: inline; vertical-align: baseline; color:#7e342d; font-weight: bold; font-size: 96px; align: center; margin-left:25%"> Pro Loco <h1   style=" vertical-align: text-baseline; display: inline; color:#7e342d; font-size: 48px; text-align: center;" >S.Piero a Sieve</h1><img src="{{url_for('static', filename ='/img/logo.jpg')}}" width="5%" height="5%" style="float: right;"/> </p>
+
+	<div class="header">
+
+	</div>
+	<div class="stellarnav">
+		<ul>
+			{% for menus in menu %}
+			<li>
+
+                				<a href="{{ menus[6] }}" class="gn-icon gn-icon-help">{{menus[4]}}</a>
+								<ul class="dl-submenu">
+									{% for submenus in submenu %}
+									<li >
+												{% if menus[1] == submenus[2] %}
+                        					<a href="{{submenus[6]}}" ><span></span> {{submenus[4]}}</a>
+											{% endif %}
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+			{% endfor%}
+
+		</ul>
+	</div><!-- .stellarnav -->
+
+	<!-- required -->
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 	<script type="text/javascript" src="{{url_for('static', filename ='stellarnav/js/stellarnav.min.js')}}"></script>
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {
@@ -54,10 +86,9 @@ body { height: 3200px; font-size: 16px; font-family: 'Exo 2', sans-serif; backgr
 			});
 		});
 	</script>
-</head>
+	<!-- required -->
+</header>
 
-<body>
-{% include 'menu.xhtml' %}
 
 <div >
 

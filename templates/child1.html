@@ -1,0 +1,12 @@
+{% extends 'template.xhtml' %}
+{% block content %}
+  {% if task == 'content1' %}
+<body>
+   <iframe  scrolling="no" width="100%" height="500 px" src=" {{ url_for('slide', luogo=luogo)}} " frameborder="0" style="padding-top:1%;"></iframe>
+	<!-- required -->
+</body>
+  {% endif %}
+  {% if task == 'content2' %}
+    <!-- include content2.html -->
+  {% endif %}
+{% endblock %}
