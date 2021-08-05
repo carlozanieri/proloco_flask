@@ -14,9 +14,10 @@
 
 <body>
 {% include 'menu.xhtml' %}
-<h1>{{titolo}}</h1>
+
 
     <div id="w" style="margin-left:{{per}};">
+      <h1>{{titolo}}</h1>
     <div class="crsl-items" data-navigation="navbtns">
       <div class="crsl-wrap">
         {% for newss in news %}
@@ -26,7 +27,7 @@
             <span class="postdate">{{newss[6]}}</span>
           </div>
 
-          <h3><a href="#">{{newss[3]}}</a></h3>
+          <h3 style="margin-left:15%;"><a href="#" >{{newss[3]}}</a></h3>
 
           <p>{{newss[5]}}</p>
           {% if go == "more" %}
