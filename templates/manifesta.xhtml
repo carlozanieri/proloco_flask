@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta http-equiv="Content-Type" content="text/html"/>
+
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
   <link rel="shortcut icon" href="http://static.tmimgcdn.com/img/favicon.ico"/>
   <link rel="icon" href="http://static.tmimgcdn.com/img/favicon.ico"/>
@@ -14,12 +14,15 @@
 
 <body>
 {% include 'menu.xhtml' %}
-
-
+<div style="margin-left:-10%; ">
+ <h1 >{{titolo}}</h1>
+</div>
     <div id="w" style="margin-left:{{per}};">
-      <h1>{{titolo}}</h1>
+
     <div class="crsl-items" data-navigation="navbtns">
+
       <div class="crsl-wrap">
+
         {% for newss in news %}
         <div class="crsl-item">
           <div class="thumbnail">
