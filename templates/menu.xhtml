@@ -8,7 +8,7 @@
 	<!-- <link href="https://fonts.googleapis.com/css?family=Exo+2:300,400" rel="stylesheet"/>
 	required -->
 	<link rel="stylesheet" type="text/css" media="all" href="{{url_for('static', filename ='stellarnav/css/stellarnav.css')}}"/>
-
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
   <style>
 .content { margin:5px auto; max-width:728px; line-height:1.7}
 
@@ -29,6 +29,7 @@ body { height: 3200px; font-size: 16px; font-family: 'Exo 2', sans-serif; backgr
 </head>
 
 <body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
 <header>
 <img src="{{url_for('static', filename ='/img/logo.jpg')}}" width="5%" height="5%" style="float: left;"/><p style=" display: inline; vertical-align: baseline; color:#7e342d; font-weight: bold; font-size: 96px; align: center; margin-left:25%"> Pro Loco <h1   style=" vertical-align: text-baseline; display: inline; color:#7e342d; font-size: 48px; text-align: center;" >S.Piero a Sieve</h1><img src="{{url_for('static', filename ='/img/logo.jpg')}}" width="5%" height="5%" style="float: right;"/> </p>
 
@@ -67,7 +68,7 @@ body { height: 3200px; font-size: 16px; font-family: 'Exo 2', sans-serif; backgr
 			});
 		});
 	</script>
-	<!-- required -->
+</nav>	<!-- required -->
 </body>
 
 </html>
