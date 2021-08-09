@@ -38,12 +38,13 @@ body { height: 3200px; font-size: 16px; font-family: 'Exo 2', sans-serif; backgr
 			{% for menus in menu %}
 			<li>
 
-                				<a href="{{ menus[6] }}" class="gn-icon gn-icon-help">{{menus[4]}}</a>
+                				<a href="{{ menus.link }}?username={{session.username}}" class="gn-icon gn-icon-help">{{menus.titolo}}</a>
+
 								<ul class="dl-submenu">
 									{% for submenus in submenu %}
 									<li >
-												{% if menus[1] == submenus[2] %}
-                        					<a href="{{submenus[6]}}" ><span></span> {{submenus[4]}}</a>
+												{% if menus.codice == submenus.radice %}
+                        					<a href="{{submenus.link}}?username={{session.username}}" ><span></span> {{submenus.titolo}}</a>
 											{% endif %}
 									</li>
 									{% endfor %}

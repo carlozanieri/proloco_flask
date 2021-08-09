@@ -29,15 +29,15 @@
        {% for newss in news %}
         <div class="crsl-item">
           <div class="thumbnail">
-            <img  src= "{{url_for('static', filename ='news/img/')}}{{newss[8]}}" alt="{{newss[3]}}"/>
-            <span class="postdate">Feb 16, 2014</span>
+            <img  src= "{{url_for('static', filename ='news/img/')}}{{newss.img}}" alt="{{newss.img}}"/>
+            <span class="postdate">{{newss.date.strftime("%d %B, %Y")}}</span>
           </div>
 
-          <h3><a href="#">{{newss[3]}}</a></h3>
+          <h3><a href="#">{{newss.title}}</a></h3>
 
-          <p>{{newss[10]}}</p>
+          <p>{{newss.html}}</p>
 
-          <p class="readmore"><a href="{{ url_for('news_one',titolo=newss[3],id=newss[0])}}"  target="_parent">Read More &raquo;</a></p>
+          <p class="readmore"><a href="{{ url_for('news_one',titolo=newss.title,id=newss.id)}}"  target="_parent">Read More &raquo;</a></p>
         </div><!-- post #1 -->
       {% endfor %}
 

@@ -24,7 +24,7 @@ import re
 import subprocess
 
 import tornado.escape
-
+from datetime import date
 from tornado import gen
 import tornado.httpserver
 import tornado.ioloop
@@ -141,7 +141,8 @@ class Connect:
         cursor = db.cursor()
         cursor.execute("SELECT *  from menuweb where livello=2")
 
-        menu = cursor.fetchall()
+        rows = cursor.fetchall()
+        menu = [dict(id=row[0], codice=row[1],radice=row[2], titolo=row[4], link=row[6]) for row in rows]
         #menu = primanota[1]["descrizione"]
         return menu
 
@@ -162,8 +163,8 @@ class Connect:
         cursor = db.cursor()
         cursor.execute("SELECT *  from menuweb where livello=3 ")
 
-        submenu = cursor.fetchall()
-        #menu = primanota[1]["descrizione"]
+        rows = cursor.fetchall()
+        submenu = [dict(id=row[0], codice=row[1],radice=row[2], titolo=row[4], link=row[6]) for row in rows]
         return submenu
     def submnu2(self):
 
@@ -172,8 +173,8 @@ class Connect:
         cursor = db.cursor()
         cursor.execute("SELECT *  from menuweb where livello=4 ")
 
-        submenu2 = cursor.fetchall()
-        #menu = primanota[1]["descrizione"]
+        rows = cursor.fetchall()
+        submenu2 = [dict(id=row[0], radice=row[2], titolo=row[4], link=row[6]) for row in rows]
         return submenu2
     def body(self, pagina):
 
@@ -197,18 +198,21 @@ class Connect:
         return slider
 
     def news(self):
-        data = "2021-06-08 00:00:00"
+        data =date.today().strftime("%Y-%m-%d %H:%M:%S")
+        #data = "2021-06-08 00:00:00"
         db = MySQLdb.connect(options.mysql_host, options.mysql_user, options.mysql_password, options.mysql_database)
         ##print(menu)
         cursor = db.cursor()
         cursor.execute("SELECT *  from news where published >= '" + data + "'")
         ##cursor.execute("SELECT *  from slider")
-        slider = cursor.fetchall()
+        rows = cursor.fetchall()
+        news = [dict(id=row[0], title=row[3], dir=row[9], img=row[8], html=row[5], date=row[6]) for row in rows]
         # menu = primanota[1]["descrizione"]
-        return slider
+        return news
 
     def news_one(self, titolo, id):
-        data = "2021-06-08 00:00:00"
+        data = date.today().strftime("%Y-%m-%d %H:%M:%S")
+        #data = "2021-06-08 00:00:00"
         ##titolo=titolo
         db = MySQLdb.connect(options.mysql_host, options.mysql_user, options.mysql_password, options.mysql_database)
         ##print(titolo)
@@ -216,22 +220,26 @@ class Connect:
         ####cursor.execute("SELECT *  from news where id = 3")
         cursor.execute("SELECT *  from news where id = '" + id + "'")
         ##cursor.execute("SELECT *  from slider")
-        news = cursor.fetchall()
-        # menu = primanota[1]["descrizione"]
+        ##news = cursor.fetchall()
+        rows = cursor.fetchall()
+        news = [dict(id=row[0], title=row[3], dir=row[9], img=row[8], html=row[5], date=row[6]) for row in rows]
         return news
+
     def manifesta(self):
-        data = "2021-06-08 00:00:00"
+        data = date.today().strftime("%Y-%m-%d %H:%M:%S")
+        #data="2021-06-08 00:00:00"
         db = MySQLdb.connect(options.mysql_host, options.mysql_user, options.mysql_password, options.mysql_database)
         ##print(menu)
         cursor = db.cursor()
         cursor.execute("SELECT *  from manifestazioni where published >= '" + data + "'")
         ##cursor.execute("SELECT *  from slider")
-        manifesta = cursor.fetchall()
-        # menu = primanota[1]["descrizione"]
+        rows = cursor.fetchall()
+        manifesta = [dict(id=row[0], title=row[3], html=row[5], date=row[6], dir=row[9], img=row[8]) for row in rows]
         return manifesta
 
     def manifesta_one(self, titolo, id):
-        data = "2021-06-08 00:00:00"
+        data = date.today().strftime("%Y-%m-%d %H:%M:%S")
+        #data = "2021-06-08 00:00:00"
         ##titolo=titolo
         db = MySQLdb.connect(options.mysql_host, options.mysql_user, options.mysql_password, options.mysql_database)
         ##print(titolo)
@@ -239,7 +247,8 @@ class Connect:
         ####cursor.execute("SELECT *  from news where id = 3")
         cursor.execute("SELECT *  from manifestazioni where id = '" + id + "'")
         ##cursor.execute("SELECT *  from slider")
-        manifesta = cursor.fetchall()
+        rows = cursor.fetchall()
+        manifesta = [dict(id=row[0], title=row[3], dir=row[9], img=row[8], html=row[5], date=row[6]) for row in rows]
         # menu = primanota[1]["descrizione"]
         return manifesta
 

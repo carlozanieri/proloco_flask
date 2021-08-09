@@ -8,10 +8,14 @@ import os
 import tempfile
 import flask
 from flask import request
-from flask import Flask, render_template
+from flask import flash, render_template, redirect, url_for, session
 # Python2
 # import StringIO
 from io import StringIO
+from flask_mysqldb import MySQL
+import MySQLdb.cursors
+import re
+from flask_login import login_required
 from werkzeug.utils import secure_filename
 from Connect import Connect
 # whitelist of file extensions
@@ -20,6 +24,11 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = flask.Flask(__name__, static_folder="static")
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.config['MYSQL_HOST'] = 'linuxmugello.net'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'trex39'
+app.config['MYSQL_DB'] = 'prolocogest'
+mysql = MySQL(app)
 @app.errorhandler(OSError)
 def handle_oserror(oserror):
     """ Flask framework hooks into this function is OSError not handled by routes """
@@ -31,22 +40,97 @@ def allowed_file(filename):
     """ whitelists file extensions for security reasons """
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route("/home")
+@app.route('/home/')
 def home():
-    """Landing page route."""
-    nav = [
-        {"name": "Home", "url": "https://example.com/1"},
-        {"name": "About", "url": "https://example.com/2"},
-        {"name": "Pics", "url": "https://example.com/3"},
-    ]
-    return render_template(
-        "home.html",
-        nav=nav,
-        title="Jinja Demo Site",
-        description="Smarter page templates with Flask & Jinja.",
-        menu=Connect.menu(""), submenu=Connect.submnu(""),
-        luogo="index", pagina=Connect.body("", "index"), tempdir="/srv/http/proloco_flask/static/img/",
-    )
+    # Check if user is loggedin
+    if 'loggedin' in session:
+        # User is loggedin show them the home page
+        return render_template('home.html', username=session['username'])
+    # User is not loggedin redirect to login page
+
+# http://localhost:5000/pythonlogin/ - this will be the login page, we need to use both GET and POST requests
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+    # Output message if something goes wrong...
+    msg = ''
+    # Check if "username" and "password" POST requests exist (user submitted form)
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+        # Create variables for easy access
+        username = request.form['username']
+        password = request.form['password']
+        # Check if account exists using MySQL
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password,))
+        # Fetch one record and return result
+        account = cursor.fetchone()
+        # If account exists in accounts table in out database
+        if account:
+            # Create session data, we can access this data in other routes
+            session['loggedin'] = True
+            session['id'] = account['id']
+            session['username'] = account['username']
+            # Redirect to home page
+            return flask.render_template('master.xhtml', username=session['username'], pagina=Connect.body("", "chisiamo"), luogo="index",menu=Connect.menu(""), submenu=Connect.submnu("") )
+        else:
+            # Account doesnt exist or username/password incorrect
+            msg = 'Incorrect username/password!'
+    # Show the login form with message (if any)
+    return render_template('index.html', msg=msg)
+# http://localhost:5000/python/logout - this will be the logout page
+@app.route('/logout/')
+def logout():
+    # Remove session data, this will log the user out
+   session.pop('loggedin', None)
+   session.pop('id', None)
+   session.pop('username', None)
+   # Redirect to login page
+   return flask.render_template('master.xhtml', luogo="index", pagina=Connect.body("", "index"), tempdir="/srv/http/proloco_flask/static/img/", menu=Connect.menu(""), submenu=Connect.submnu(""), submenu2=Connect.submnu2(""))
+
+@app.route('/register/', methods=['GET', 'POST'])
+def register():
+    # Output message if something goes wrong...
+    msg = ''
+    # Check if "username", "password" and "email" POST requests exist (user submitted form)
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
+        # Create variables for easy access
+        username = request.form['username']
+        password = request.form['password']
+        email = request.form['email']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM accounts WHERE username = %s', (username,))
+        account = cursor.fetchone()
+        # If account exists show error and validation checks
+        if account:
+            msg = 'Account already exists!'
+        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+            msg = 'Invalid email address!'
+        elif not re.match(r'[A-Za-z0-9]+', username):
+            msg = 'Username must contain only characters and numbers!'
+        elif not username or not password or not email:
+            msg = 'Please fill out the form!'
+        else:
+            # Account doesnt exists and the form data is valid, now insert new account into accounts table
+            cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s)', (username, password, email,))
+            mysql.connection.commit()
+            msg = 'You have successfully registered!'
+    elif request.method == 'POST':
+        # Form is empty... (no POST data)
+        msg = 'Please fill out the form!'
+    # Show registration form with message (if any)
+    return render_template('register.html', msg=msg)
+
+@app.route('/profile/')
+def profile():
+    # Check if user is loggedin
+    if 'loggedin' in session:
+        # We need all the account info for the user so we can display it on the profile page
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM accounts WHERE id = %s', (session['id'],))
+        account = cursor.fetchone()
+        # Show the profile page with account info
+        return render_template('profile.html', account=account)
+    # User is not loggedin redirect to login page
+    return redirect(url_for('login'))
 
 @app.route("/")
 def entry_point():
@@ -78,7 +162,7 @@ def chisiamo():
 @app.route('/menu')
 def menu():
 
-    return flask.render_template('menu.xhtml', pagina=Connect.body("", "menu"), luogo="index",menu=Connect.menu(""), submenu=Connect.submnu("") )
+    return flask.render_template('menu.xhtml', username=session['username'], pagina=Connect.body("", "menu"), luogo="index",menu=Connect.menu(""), submenu=Connect.submnu("") )
 
 @app.route('/upload_form')
 def upload_form():
@@ -116,14 +200,14 @@ def news_one():
 
 @app.route('/manifestazioni')
 def manifestazioni():
-    return flask.render_template('manifesta.xhtml', titolo="Manifestazioni", per='5%', go="more", pagina=Connect.body("", "sanpiero"), manifestazione="manifestazioni", news=Connect.manifesta(""),menu=Connect.menu(""), submenu=Connect.submnu("") )
+    return flask.render_template('manifesta.xhtml', username=session['username'], titolo="Manifestazioni", per='5%', go="more", pagina=Connect.body("", "sanpiero"), manifestazione="manifestazioni", news=Connect.manifesta(""),menu=Connect.menu(""), submenu=Connect.submnu("") )
 
 @app.route('/manifestazioni_one')
 def manifestazioni_one():
         titolo = request.args['titolo']
         id = request.args['id']
         """Handle the front-page."""
-        return flask.render_template('manifesta.xhtml', per='30%', go="back", news=Connect.manifesta_one("", titolo, id), pagina=Connect.body("", "sanpiero"), titolo=titolo, id=id,menu=Connect.menu(""), submenu=Connect.submnu(""))
+        return flask.render_template('manifesta.xhtml', username=session['username'], per='30%', go="back", news=Connect.manifesta_one("", titolo, id), pagina=Connect.body("", "sanpiero"), titolo=titolo, id=id,menu=Connect.menu(""), submenu=Connect.submnu(""))
 
 @app.route("/singleuploadchunked/<filename>", methods=["POST", "PUT"])
 def single_upload_chunked(filename=None):
