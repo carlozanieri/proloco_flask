@@ -14,9 +14,16 @@
 
 <body>
 {% include 'menu.xhtml' %}
+
 <div style="margin-left:-10%; ">
 
  <h1 >{{titolo}}</h1>
+  <nav class="slidernav">
+      <div id="navbtns" class="clearfix">
+        <a href="#" class="previous">prev</a>
+        <a href="#" class="next">next</a>
+      </div>
+    </nav>
 </div>
 
     <div id="w" style="margin-left:{{per}};">
@@ -28,7 +35,7 @@
         {% for newss in news %}
         <div class="crsl-item">
           <div class="thumbnail">
-            <img  src= "{{url_for('static', filename ='news/img/')}}{{newss.img}}" alt="{{newss.title}}"/>
+            <img  src= "{{url_for('static', filename ='img/manifestazioni/')}}{{newss.img}}" alt="{{newss.title}}"/>
 
             <span class="postdate">{{newss.date.strftime("%d %B, %Y")}}</span>
           </div>

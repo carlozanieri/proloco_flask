@@ -19,7 +19,8 @@ from flask_login import login_required
 from werkzeug.utils import secure_filename
 from Connect import Connect
 # whitelist of file extensions
-UPLOAD_FOLDER = '/srv/http/proloco_flask/static/img'
+##UPLOAD_FOLDER = '/srv/http/proloco_flask/static/img'
+##UPLOAD_FOLDER = request.form['uploaddir']
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = flask.Flask(__name__, static_folder="static")
@@ -137,6 +138,7 @@ def ins_manifesta():
     # Output message if something goes wrong...
     msg = ''
     # Check if "username", "password" and "email" POST requests exist (user submitted form)
+
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
         # Create variables for easy access
         username = request.form['username']
@@ -155,6 +157,7 @@ def ins_manifesta():
         elif not username or not password or not email:
             msg = 'Please fill out the form!'
         else:
+            multiple_upload()
             # Account doesnt exists and the form data is valid, now insert new account into accounts table
             cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s)', (username, password, email,))
             mysql.connection.commit()
@@ -276,7 +279,7 @@ def single_upload_chunked(filename=None):
         return flask.redirect(flask.url_for("upload_form", pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("")))
 
     print("Total Content-Length: " + flask.request.headers['Content-Length'])
-    fileFullPath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    fileFullPath = os.path.join(app.config[request.form['uploaddir']], filename)
 
     chunk_size = app.config['CHUNK_SIZE']
     try:
@@ -307,6 +310,8 @@ def single_upload_chunked(filename=None):
 
 @app.route("/multipleupload", methods=["GET", "POST", "PUT"])
 def multiple_upload(file_element_name="files[]"):
+    ###upload_folder = request.form['uploaddir']
+    UPLOAD_FOLDER = request.form['uploaddir']
     """Saves files uploaded from <input type="file">, can be multiple files
     
        Positive Test (single file):
@@ -331,6 +336,7 @@ def multiple_upload(file_element_name="files[]"):
     # so check for errors right up front
     try:
         flask.request.files
+
     except OSError as e:
         print("ERROR ON INITIAL TOUCH OF request.files")
         add_flash_message("ERROR materializing files to disk: " + StringIO(str(e)).getvalue())
@@ -353,10 +359,14 @@ def multiple_upload(file_element_name="files[]"):
     for ufile in files:
         try:
             filename = secure_filename(ufile.filename)
+            UPLOAD_FOLDER = request.form['uploaddir']
             if allowed_file(filename):
                 print("uploading file {} of type {}".format(filename, ufile.content_type))
-                ufile.save(os.path.join(UPLOAD_FOLDER, filename))
-                flask.flash("Just uploaded: " + filename)
+                ##ufile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                ufile.save(os.path.join(UPLOAD_FOLDER , filename))
+
+                #ufile.save(request.form['uploaddir'], filename)
+                flask.flash("Just uploaded: " + request.form['uploaddir'] + filename)
             else:
                 add_flash_message("not going to process file with extension " + filename)
         except OSError as e:
@@ -379,7 +389,7 @@ if __name__ == "__main__" or __name__ == "main":
               print("Overriding tempdir for docker image")
               tempfile.tempdir = os.getenv("TEMP_DIR")
     print("tempdir: " + "/srv/http/proloco_flask/static/img/")
-    app.config['UPLOAD_FOLDER'] = "/srv/http/proloco_flask/static/img/"
+
 
     # Below error if MAX_CONTENT_LENGTH is exceeded by upload
     # [error] 11#11: *1 readv() failed (104: Connection reset by peer) while reading upstream
@@ -392,5 +402,11 @@ if __name__ == "__main__" or __name__ == "main":
 
     # docker flask uwsgi starts itself
     if __name__ == "__main__":
+        if not os.getenv("TEMP_DIR") is None:
+            if os.path.isdir(os.getenv("TEMP_DIR")):
+                print("Overriding tempdir for docker image")
+                tempfile.tempdir = os.getenv("TEMP_DIR")
+        print("tempdir: " + tempfile.gettempdir())
+        app.config['UPLOAD_FOLDER'] = "static/img/manifestazioni"
         port = int(os.getenv("PORT", 8000))
         app.run(host='0.0.0.0', port=port)

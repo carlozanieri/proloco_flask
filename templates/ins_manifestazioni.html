@@ -11,26 +11,36 @@
 	<body>
 
 		<div class="register">
-			<h1>Register</h1>
+			<h1> {{session['username']}}  Inserisci Manifestzione</h1>
 			<div class="links">
 
 				<a href="{{ url_for('ins_manifesta') }}" class="active">Inserisci Manifestazione</a>
 			</div>
+
+
 			<form action="{{ url_for('ins_manifesta') }}" method="post" autocomplete="off">
 				<label for="username">
 					<i class="fas fa-user"></i>
 				</label>
-				<input type="text" name="username" placeholder="Username" id="username" required>
-				<label for="password">
+				<input type="hidden" name="username" placeholder="{{session['username']}}" id="username" required>
+				<textarea name="html" id="html" cols="30" rows="10"></textarea>
 					<i class="fas fa-lock"></i>
 				</label>
-				<input type="password" name="password" placeholder="Password" id="password" required>
+
+  				<input type="file" name="files[]" />
 				<label for="email">
 					<i class="fas fa-envelope"></i>
 				</label>
-				<input type="email" name="email" placeholder="Email" id="email" required>
+				<input type="email" name="email" placeholder="Email" id="email" >
 				<div class="msg">{{ msg }}</div>
+
 				<input type="submit" value="ins_manifesta">
+			</form>
+			<form action= "/multipleupload" method="POST" enctype="multipart/form-data">
+				<!--<input type="text" name="uploaddir" value="{{url_for('static', filename ='img/manifestazioni/')}}" placeholder="{{url_for('static', filename ='img/manifestazioni/')}}" id="uploaddir" >-->
+				<input type="text" name="uploaddir" value="static/img/manifestazioni/" placeholder="static/img/manifestazioni/" id="uploaddir" >
+  				<input type="file" name="files[]" multiple  />
+  				<input type="submit" value="submit multiple files"/>
 			</form>
 		</div>
 	</body>
