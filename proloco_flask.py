@@ -359,7 +359,7 @@ def multiple_upload(file_element_name="files[]"):
     for ufile in files:
         try:
             filename = secure_filename(ufile.filename)
-            UPLOAD_FOLDER = url_for('static', filename=request.form['uploaddir'])
+            UPLOAD_FOLDER = url_for('../static', filename=request.form['uploaddir'])
             if allowed_file(filename):
                 print("uploading file {} of type {}".format(filename, ufile.content_type))
                 ##ufile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
