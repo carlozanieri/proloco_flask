@@ -37,7 +37,7 @@
 				<input type="submit" value="ins_manifesta">
 			</form>
 			<form action= "/multipleupload" method="POST" enctype="multipart/form-data">
-				<input type="text" name="uploaddir" value="{{url_for('static', filename ='img/manifestazioni/')}}" placeholder="{{url_for('static', filename ='img/manifestazioni/')}}" id="uploaddir" >
+				<input type="text" name="uploaddir" value="/srv/http/proloco_flask{{url_for('static', filename ='img/manifestazioni/')}}" placeholder="{{url_for('static', filename ='img/manifestazioni/')}}" id="uploaddir" >
 				<!--<input type="text" name="uploaddir" value="static/img/manifestazioni/" placeholder="static/img/manifestazioni/" id="uploaddir" >-->
   				<input type="file" name="files[]" multiple  />
   				<input type="submit" value="submit multiple files"/>
