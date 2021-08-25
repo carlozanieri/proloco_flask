@@ -372,7 +372,11 @@ def multiple_upload(file_element_name="files[]"):
         except OSError as e:
             add_flash_message("ERROR writing file " + filename + " to disk: " + StringIO(str(e)).getvalue())
 
-    return flask.redirect(flask.url_for("upload_form", pagina=Connect.body("", "upload"), luogo="upload",menu=Connect.menu(""), submenu=Connect.submnu("")))
+    return flask.render_template('ins_manifestazioni.html', luogo="index", pagina=Connect.body("", "index"),
+                                 tempdir="/srv/http/proloco_flask/static/img/", menu=Connect.menu(""),
+                                 submenu=Connect.submnu(""), submenu2=Connect.submnu2(""))
+
+    #return flask.redirect(flask.url_for("ins_manifesta", pagina=Connect.body("", "upload"), luogo="upload", menu=Connect.menu(""), submenu=Connect.submnu("")))
 
 def add_flash_message(msg):
     """Provides message to end user in browser"""

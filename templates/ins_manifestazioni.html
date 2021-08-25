@@ -5,12 +5,35 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Inserisci Manifestazione</title>
+		<meta name="author" content="Carlo Zanieri" />
+		<link rel="shortcut icon" href="../favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename ='menu_6/css/default.css')}}" />
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename ='menu_6/css/component.css')}}" />
+		<script src="{{url_for('static', filename ='menu_6/js/modernizr.custom.js')}}"></script>
+		<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename ='menu_6/css/default.css')}}" />
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename ='menu_6/css/component.css')}}" />
+
+    <link rel="stylesheet" href="{{url_for('static', filename ='MENU/css/style.css')}}"/>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+		<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 	</head>
 	<body>
 
-		<div class="register">
+{% include 'menu.xhtml' %}
+<div class="register">
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<p style="color: red; font-weight: bold;">
+{% for message in messages %}
+  <p>{{ message }}</p>
+{% endfor %}
+</p>
+{% endif %}
+{% endwith %}
+
 			<h1> {{session['username']}}  Inserisci Manifestzione</h1>
 			<div class="links">
 
